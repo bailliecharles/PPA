@@ -136,7 +136,7 @@ if (opt$distribution==TRUE){
 } # close off PPADIV
 
 ###-------------------------------
-###         PPA Chi-Square
+###         PPA Chi-Squared
 ###-------------------------------
 
 if (opt$PPAX2==TRUE){
@@ -159,10 +159,9 @@ adjusted_chix_sims_table = lapply(adjusted_chix_sims, function (x) table(row(x),
 adjusted_chix_sims_table[[1]]
 
 
-empiricalX2 = chisq.test(adjusted_chix_empirical_table, simulate.p.value = T, B=1000)$statistic
-simsX2 = lapply(adjusted_chix_sims_table, function(x) chisq.test(x, simulate.p.value = T, B=1000)$statistic)
+empiricalX2 = chisq.test(adjusted_chix_empirical_table, simulate.p.value = F)$statistic
+simsX2 = lapply(adjusted_chix_sims_table, function(x) chisq.test(x, simulate.p.value = F)$statistic)
 simsX2 = as.numeric(unlist(simsX2))
-simsX2
 ZChi = abs(empiricalX2-median(simsX2))/sd(simsX2)
 
 
