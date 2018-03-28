@@ -8,14 +8,14 @@ As input it needs the empirical alignment, the format of that alignment (only fa
 The PPAs performed are all 'data' checks rather than 'inference' based:
 1. PPADIV - the mean nucleotide/aminoacid diversity per site
 2. PPAX2 - a Chi-squared test for homogeneity of base frequencies between taxa
-3. PPAMULTI - the multinomial likelihood test from Bolback (2002)
+3. PPAMULTI - the multinomial likelihood test of site patterns from Bollback (2002)
 
-With default settings it will calculate all three and output for each, in one file:
+With default settings it will calculate all three stats and output for each, in one file:
 1. The empirical statistic
 2. The range of the simulated statistics
-3. The z-score calculated as the median of the simulated values subtracted from empirical value, divided by the standard deviation of the simulated values
-There is also an option to print out all of values for each test, for each simulated alignment. 
+3. The z-score (calculated as the median of the simulated values subtracted from the empirical value, divided by the standard deviation of the simulated values)
+There is also an option to print out all values of each test for each simulated alignment. 
 
-This is not a very fast script - there are a lot of *apply functions and data manipulations going on! For 1,000 simulated alignments (which is probably more than representative) the script will run in approximately 3 minutes. 
+This is not a very fast script - there are a lot of \*apply functions and data manipulations going on! For 1,000 simulated alignments (which is probably more than representative) the script will run in approximately 3 minutes. 
 
 Please let me know if there are any issues and it would be great if someone could double check the calculations... 
