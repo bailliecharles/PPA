@@ -142,11 +142,11 @@ if (opt$distribution==TRUE){
 ###-------------------------------
 
 if (opt$PPAX2==TRUE){
-# Here gap containing sites contribute nothing to the final stat so in the same index in the sims as the empirical need to be made NA  
+# Here gap containing sites contribute nothing to the final stat so the same gap cotaining index in the sims as in the empirical need to be made NA  
 # In some papers the sites will be removed from the empirical dataset before simulation, however, I'm not sure how this would work with 
 # a partitioned data set. The point of the PPAs here is to compare partitioned models with CAT models so I'm doing the sims, then 
 # removing the data. Otherwise, we would have to redefine the partitions, which might (at worst) exclude whole partitions that are 
-# actually contributing the estimate of phylogeny, or at least change the partitions so much that a more appropraiate substitution model 
+# actually contributing to the estimate of phylogeny, or at least change the partitions so much that a more appropraiate substitution model 
 # may be required.Hmmmmmm not sure about this but at least the empirical and simulated datasets are treated the same, and the sims are 
 # done for a partitioned model. Moving on:
 
@@ -192,9 +192,6 @@ if (opt$PPAMULTI==TRUE){
 #T(x) = (3*2*(log(2)) + 4*(log(1))) - 10*(log(10))
 #T(x) = -18.87
 # To do this calculation we need to remove all the gap containing columns in the empirical, and corresponding sites in the sims.
-
-multi_empirical = empirical_matrix
-multi_sims = sims
 
 adjusted_multi_empirical = multi_empirical[,-gaps_cols] # remove the gap containing columns
 
