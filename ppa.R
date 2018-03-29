@@ -158,7 +158,6 @@ adjusted_chix_empirical_table = table(row(adjusted_chix_empirical), as.matrix(ad
 
 adjusted_chix_sims = lapply(chix_sims, function(x) { x[gap_idx[,1:2]] <- NA ; x}   ) # make sims NA in same place as empirical NA
 adjusted_chix_sims_table = lapply(adjusted_chix_sims, function (x) table(row(x), as.matrix(x))) # calc contingency table for each sim- takes ~15s for 1000! 
-adjusted_chix_sims_table[[1]]
 
 
 empiricalX2 = chisq.test(adjusted_chix_empirical_table, simulate.p.value = F)$statistic
