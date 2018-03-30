@@ -211,7 +211,7 @@ for (i in 1:length(multi_sims)){
  sims_multi_DF[[i]]= as.data.frame(cbind(sims5m[[i]], sims6m[[i]]))
 }
 
-ppaMultinomial = function(x) {sum(x[,2]*x[,1]*(log(x[,1]))) - ncol(empirical_multi_DF)*(log(ncol(empirical_multi_DF)))} # define function
+ppaMultinomial = function(x) {sum(x[,2]*x[,1]*(log(x[,1]))) - ncol(empirical_matrix)*(log(ncol(empirical_matrix)))} # define function
 
 empiricalMulti = ppaMultinomial(empirical_multi_DF)
 simsMulti = as.numeric(unlist(lapply(sims_multi_DF,ppaMultinomial)))
