@@ -19,7 +19,7 @@ option_list = list(
   make_option(c("-f", "--empirical_alignment_format"), type="character", default=NULL,
               help="format of empirical alignment: can be one of fasta or phylip", metavar="character"),
   make_option(c("-d", "--distribution"), type="character", default=FALSE,
-              help="format of empirical alignment: can be one of fasta or phylip", metavar="phylip or fasta"),
+              help="print all values of the posterior statitic (i.e. for each alignment)", metavar="logical"),
   make_option(c("-l", "--line_number"), type="numeric", default=1,
               help="number of lines in file between simulated alignments, including things like phylip headers", metavar="number"),
   make_option(c("-ry", "--RY_coding"), type="character", default=FALSE,
