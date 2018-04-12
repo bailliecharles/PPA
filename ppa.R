@@ -13,24 +13,24 @@ suppressMessages(suppressWarnings(library(dplyr, quietly=T)))
 
 option_list = list(
   make_option(c("-s", "--simulations"), type="character", default=NULL,
-              help="posterior predictive simulations from P4 script", metavar="character"),
+              help="posterior predictive simulations from P4 script", metavar="path"),
   make_option(c("-e", "--empirical_alignment"), type="character", default=NULL,
-              help="empirical alignment - should be same dims as simulations", metavar="character"),
+              help="empirical alignment - should be same dims as simulations", metavar="path"),
   make_option(c("-f", "--empirical_alignment_format"), type="character", default=NULL,
               help="format of empirical alignment: can be one of fasta or phylip", metavar="character"),
   make_option(c("-d", "--distribution"), type="character", default=FALSE,
-              help="format of empirical alignment: can be one of fasta or phylip", metavar="character"),
+              help="format of empirical alignment: can be one of fasta or phylip", metavar="phylip or fasta"),
   make_option(c("-l", "--line_number"), type="numeric", default=1,
-              help="number of lines in file between simulated alignments, including things like phylip headers", metavar="character"),
-  make_option(c("-D", "--PPADIV"), type="character", default=TRUE,
-              help="PPADIV: mean diversity per site across alignment", metavar="character"),
+              help="number of lines in file between simulated alignments, including things like phylip headers", metavar="number"),
   make_option(c("-ry", "--RY_coding"), type="character", default=FALSE,
               help="is the third codon position coded as puRines and pYrimidines? assumes the empirical alignment has every 3rd site coded 
-              as R and Y, but the simulations are coded a,g,c,t (as they are from P4).", metavar="character"),
+              as R and Y, but the simulations are coded a,g,c,t (as they are from P4).", metavar="logical"),
+  make_option(c("-D", "--PPADIV"), type="character", default=TRUE,
+              help="PPADIV: mean diversity per site across alignment", metavar="logical"),
   make_option(c("-C", "--PPAX2"), type="character", default= TRUE,
-              help="PPAX2: Chi-squared test of compositional homogeneity between taxa", metavar="character"),
+              help="PPAX2: Chi-squared test of compositional homogeneity between taxa", metavar="logical"),
   make_option(c("-M", "--PPAMULTI"), type="character", default= TRUE,
-              help="PPAMULTI: Multinomial test of alignment site patterns sensu Bollback (2002) eqn. 7", metavar="character")
+              help="PPAMULTI: Multinomial test of alignment site patterns sensu Bollback (2002) eqn. 7", metavar="logical")
 );
 
 opt_parser = OptionParser(option_list=option_list);
