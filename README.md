@@ -21,7 +21,5 @@ With default settings it will calculate all three stats and output for each, in 
 3. The z-score (calculated as the median of the simulated values subtracted from the empirical value, divided by the standard deviation of the simulated values)
 There is also an option to print out all values of each test for each simulated alignment. 
 
-This is not a very fast script - there are a lot of \*apply functions and data manipulations going on! For 1,000 simulated alignments (which is probably more than representative) the script will run in approximately 3 minutes. 
+This is not a very fast script - there are a lot of \*apply functions and data manipulations going on! For 1,000 simulated alignments (which is probably more than representative) of around 10K sites, it will run in approximately 3 minutes. 
 
-
-Please let me know if there are any issues and it would be great if someone could double check the calculations... 
