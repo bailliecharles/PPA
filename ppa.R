@@ -180,7 +180,6 @@ if (opt$PPAX2==TRUE){
 
 
 chix_empirical[chix_empirical=="-"] <- NA # make empirical NA
-chix_empirical[chix_empirical=="x"] <- NA 
 adjusted_chix_empirical<- chix_empirical
 adjusted_chix_empirical_table = table(row(adjusted_chix_empirical), as.matrix(adjusted_chix_empirical)) # make contingency table of bases
 
