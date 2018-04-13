@@ -58,6 +58,7 @@ if (is.null(opt$empirical_alignment_format) ){
 
 empirical_alignment = read.alignment(opt$empirical_alignment,format=opt$empirical_alignment_format) # read in alignment
 empirical_matrix = as.matrix.alignment(empirical_alignment) # convert to matrix
+empirical_matrix[empirical_matrix=="x"]<-"-"   # just in case there happen to be a run of X in an AA alignment
 
 if(opt$RY_coding==TRUE){                                 # See below re sims for RYcoding P4 sims. Same deal here, R and Y would be
                                                         # counted as 5th and 6th 'states' without changing them. 
@@ -179,6 +180,7 @@ if (opt$PPAX2==TRUE){
 
 
 chix_empirical[chix_empirical=="-"] <- NA # make empirical NA
+chix_empirical[chix_empirical=="x"] <- NA 
 adjusted_chix_empirical<- chix_empirical
 adjusted_chix_empirical_table = table(row(adjusted_chix_empirical), as.matrix(adjusted_chix_empirical)) # make contingency table of bases
 
