@@ -63,10 +63,10 @@ empirical_matrix[empirical_matrix=="x"]<-"-"   # just in case there happen to be
 if(opt$RY_coding==TRUE){                                 # See below re sims for RYcoding P4 sims. Same deal here, R and Y would be
                                                         # counted as 5th and 6th 'states' without changing them. 
   RYcode3rd = function(x){
-    temp = x[,seq(3, ncol(x), 3)]
+    temp = x[,c(F,F,T)]
     temp2 = recode(temp,r="a", y="t", n="-")
-    x[,seq(3, ncol(x), 3)] = temp2
-    print(x)
+    x[,c(F,F,T)] = temp2
+    return(x)
   }
   empirical_matrix = RYcode3rd(empirical_matrix)
 }
@@ -102,10 +102,10 @@ sims = P4_sim_sorter(opt$simulations)
 if(opt$RY_coding==TRUE){                                   #### P4 simulations have the correct proportion of purines and pyrimidines
                                                           #### at 3rd sites but coded as a,g,c,t. This will swap one of each for the other
   RYcode3rd = function(x){                                #### thus turning the 3rd sites binary again. 
-    temp = x[,seq(3, ncol(x), 3)]
-    temp2 = recode(temp,g="a", c="t", n="-")
-    x[,seq(3, ncol(x), 3)] = temp2
-    print(x)
+    temp = x[,c(F,F,T)]
+    temp2 = recode(temp,g="r", a="r", c="y", t="y",n="-")
+    x[,c(F,F,T)] = temp2
+    return(x)
   }
   sims = lapply(sims, function(x){RYcode3rd(x)}) 
 } 
