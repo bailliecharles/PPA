@@ -16,13 +16,11 @@ option_list = list(
               help="posterior predictive simulations from P4 script", metavar="path"),
   make_option(c("-e", "--empirical_alignment"), type="character", default=NULL,
               help="empirical alignment - should be same dims as simulations", metavar="path"),
-  make_option(c("-f", "--empirical_alignment_format"), type="character", default=NULL,
-              help="format of empirical alignment: can be one of fasta or phylip", metavar="character"),
   make_option(c("-d", "--distribution"), type="character", default=FALSE,
               help="print all values of the posterior statitic (i.e. for each alignment)", metavar="logical"),
   make_option(c("-l", "--line_number"), type="numeric", default=1,
               help="number of lines in file between simulated alignments, including things like phylip headers", metavar="number"),
-  make_option(c("-ry", "--RY_coding"), type="character", default=FALSE,
+  make_option(c("-r", "--RY_coding"), type="character", default=FALSE,
               help="is the third codon position coded as puRines and pYrimidines? assumes the empirical alignment has every 3rd site coded 
               as R and Y, but the simulations are coded a,g,c,t (as they are from P4).", metavar="logical"),
   make_option(c("-D", "--PPADIV"), type="character", default=TRUE,
@@ -46,17 +44,12 @@ if (is.null(opt$empirical_alignment) ){
   stop("Can't do PPA without an alignment against which to compare simulations!", call.=FALSE)
 }
 
-if (is.null(opt$empirical_alignment_format) ){
-  print_help(opt_parser)
-  stop("Please provide format of empirical alignment", call.=FALSE)
-}
-
 
 ###-------------------------------
 ###      Read empirical data
 ###-------------------------------
 
-empirical_alignment = read.alignment(opt$empirical_alignment,format=opt$empirical_alignment_format) # read in alignment
+empirical_alignment = read.alignment(opt$empirical_alignment,format="fasta") # read in alignment
 empirical_matrix = as.matrix.alignment(empirical_alignment) # convert to matrix
 empirical_matrix[empirical_matrix=="x"]<-"-"   # just in case there happen to be a run of X in an AA alignment
 
