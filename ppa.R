@@ -18,8 +18,8 @@ option_list = list(
               help="empirical alignment - should be same dims as simulations", metavar="path"),
   make_option(c("-d", "--distribution"), type="character", default=FALSE,
               help="print all values of the posterior statitic (i.e. for each alignment)", metavar="logical"),
-  make_option(c("-l", "--line_number"), type="numeric", default=1,
-              help="number of lines in file between simulated alignments, including things like phylip headers", metavar="number"),
+ # make_option(c("-l", "--line_number"), type="numeric", default=1,
+ #             help="number of lines in file between simulated alignments, including things like phylip headers", metavar="number"),
  # make_option(c("-r", "--RY_coding"), type="character", default=FALSE,
  #             help="is the third codon position coded as puRines and pYrimidines? assumes the empirical alignment has every 3rd site coded 
  #             as R and Y, but the simulations are coded a,g,c,t (as they are from P4).", metavar="logical"),
@@ -82,10 +82,10 @@ gaps_cols = as.numeric(levels(as.factor(gap_idx[,2]))) # gap containing columns
 
 P4_sim_sorter = function(x){
 sims = scan(x, what="", sep="\n", quiet=T)
-sims2 = split(sims, ceiling(seq_along(sims)/(nrow(empirical_matrix)+opt$line_number))) # split into separate alignments 
-sims3 = lapply(sims2, function(x) {x[-opt$line_number]}) # drop the phylip header
-sims4 = lapply(sims3, function(x) gsub(" ", "", x, fixed = TRUE)) #remove whitespace between name and sequence
-sims5 = lapply(sims4, function(x) unlist(strsplit(x, "(?<=[[:upper:]])(?=[[:lower:]])", perl=TRUE))) # split name and sequence and unlist
+sims2 = split(sims, ceiling(seq_along(sims)/(nrow(empirical_matrix)+ 1))) # split into separate alignments 
+sims3 = lapply(sims2, function(x) {x[-1]}) # drop the phylip header
+sims4 = lapply(sims3, function(x) gsub("^ *|(?<= ) | *$", "", x, perl = TRUE) #remove whitespace between name and sequence
+sims5 = lapply(sims4, function(x) unlist(strsplit(x, " ", perl=TRUE))) # split name and sequence and unlist
 sims6 = lapply(sims5, function(x) matrix(x,ncol=2, byrow=T)) # make into matrices
 sims7 = lapply(sims6, function(x) t(sapply(strsplit(x[,2],""), tolower))) # split sites
 sims8 = lapply(sims7, function(x) {row.names(x) <- as.character(sims6[[1]][,1]);x})} # name rows
