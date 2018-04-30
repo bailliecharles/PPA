@@ -20,9 +20,9 @@ option_list = list(
               help="print all values of the posterior statitic (i.e. for each alignment)", metavar="logical"),
   make_option(c("-l", "--line_number"), type="numeric", default=1,
               help="number of lines in file between simulated alignments, including things like phylip headers", metavar="number"),
-  make_option(c("-r", "--RY_coding"), type="character", default=FALSE,
-              help="is the third codon position coded as puRines and pYrimidines? assumes the empirical alignment has every 3rd site coded 
-              as R and Y, but the simulations are coded a,g,c,t (as they are from P4).", metavar="logical"),
+ # make_option(c("-r", "--RY_coding"), type="character", default=FALSE,
+ #             help="is the third codon position coded as puRines and pYrimidines? assumes the empirical alignment has every 3rd site coded 
+ #             as R and Y, but the simulations are coded a,g,c,t (as they are from P4).", metavar="logical"),
   make_option(c("-D", "--PPADIV"), type="character", default=TRUE,
               help="PPADIV: mean diversity per site across alignment", metavar="logical"),
   make_option(c("-C", "--PPAX2"), type="character", default= TRUE,
@@ -53,16 +53,16 @@ empirical_alignment = read.alignment(opt$empirical_alignment,format="fasta") # r
 empirical_matrix = as.matrix.alignment(empirical_alignment) # convert to matrix
 empirical_matrix[empirical_matrix=="x"]<-"-"   # just in case there happen to be a run of X in an AA alignment
 
-if(opt$RY_coding==TRUE){                                 # See below re sims for RYcoding P4 sims. Same deal here, R and Y would be
+#if(opt$RY_coding==TRUE){                                 # See below re sims for RYcoding P4 sims. Same deal here, R and Y would be
                                                         # counted as 5th and 6th 'states' without changing them. 
-  RYcode3rd = function(x){
-    temp = x[,c(F,F,T)]
-    temp2 = recode(temp,r="a", y="t", n="-")
-    x[,c(F,F,T)] = temp2
-    return(x)
-  }
-  empirical_matrix = RYcode3rd(empirical_matrix)
-}
+#  RYcode3rd = function(x){
+#    temp = x[,c(F,F,T)]
+#    temp2 = recode(temp,r="a", y="t", n="-")
+#    x[,c(F,F,T)] = temp2
+#    return(x)
+#  }
+#  empirical_matrix = RYcode3rd(empirical_matrix)
+#}
 
 
 if (opt$PPADIV==TRUE){div_empirical = empirical_matrix} 
@@ -92,16 +92,16 @@ sims8 = lapply(sims7, function(x) {row.names(x) <- as.character(sims6[[1]][,1]);
 
 sims = P4_sim_sorter(opt$simulations)
 
-if(opt$RY_coding==TRUE){                                   #### P4 simulations have the correct proportion of purines and pyrimidines
+#if(opt$RY_coding==TRUE){                                   #### P4 simulations have the correct proportion of purines and pyrimidines
                                                           #### at 3rd sites but coded as a,g,c,t. This will swap one of each for the other
-  RYcode3rd = function(x){                                #### thus turning the 3rd sites binary again. 
-    temp = x[,c(F,F,T)]
-    temp2 = recode(temp,g="r", a="r", c="y", t="y",n="-")
-    x[,c(F,F,T)] = temp2
-    return(x)
-  }
-  sims = lapply(sims, function(x){RYcode3rd(x)}) 
-} 
+#  RYcode3rd = function(x){                                #### thus turning the 3rd sites binary again. 
+#    temp = x[,c(F,F,T)]
+#    temp2 = recode(temp,g="r", a="r", c="y", t="y",n="-")
+#    x[,c(F,F,T)] = temp2
+#    return(x)
+#  }
+#  sims = lapply(sims, function(x){RYcode3rd(x)}) 
+#} 
                            
                
 if (opt$PPADIV== TRUE){div_sims = sims} 
