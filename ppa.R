@@ -84,13 +84,16 @@ P4_sim_sorter = function(x){
 sims = scan(x, what="", sep="\n", quiet=T)
 sims2 = split(sims, ceiling(seq_along(sims)/(nrow(empirical_matrix)+ 1))) # split into separate alignments 
 sims3 = lapply(sims2, function(x) {x[-1]}) # drop the phylip header
-sims4 = lapply(sims3, function(x) gsub("^ *|(?<= ) | *$", "", x, perl = TRUE) #remove whitespace between name and sequence
+sims4 = lapply(sims3, function(x) gsub("^ *|(?<= ) | *$", "", x, perl = TRUE)) #remove whitespace between name and sequence
 sims5 = lapply(sims4, function(x) unlist(strsplit(x, " ", perl=TRUE))) # split name and sequence and unlist
 sims6 = lapply(sims5, function(x) matrix(x,ncol=2, byrow=T)) # make into matrices
 sims7 = lapply(sims6, function(x) t(sapply(strsplit(x[,2],""), tolower))) # split sites
 sims8 = lapply(sims7, function(x) {row.names(x) <- as.character(sims6[[1]][,1]);x})} # name rows
 
 sims = P4_sim_sorter(opt$simulations)
+
+stem = gsub("[^[:alnum:]].*","", basename(opt$simulations))
+
 
 #if(opt$RY_coding==TRUE){                                   #### P4 simulations have the correct proportion of purines and pyrimidines
                                                           #### at 3rd sites but coded as a,g,c,t. This will swap one of each for the other
@@ -143,16 +146,17 @@ simsDiv = as.numeric(unlist(lapply(adjusted_div_sims,ppaDiv)))
 ZDiv = abs(empiricalDiv-median(simsDiv))/sd(simsDiv)
 
 # 6. write to file
-PPAs <- file("ppaScores.txt","w")
-writeLines(".........PPADIV...........", PPAs)
+PPAs <- file(paste(stem, "ppa.scores",sep="_"),"w")
+writeLines("##### PPADIV", PPAs)
 writeLines(paste("The emprical value is: ", empiricalDiv, sep=""), PPAs)
 writeLines(paste("The Z score is: ", ZDiv, sep=""), PPAs)
 writeLines(paste("The range of the sims is: ", round(min(simsDiv),2), " to ", round(max(simsDiv),2), sep=""), PPAs)
+writeLines("\n\n", PPAs)
 close(PPAs)
 
 if (opt$distribution==TRUE){
-  PPA_dist <- file("PPADIV-distribution.txt","w")
-  writeLines(".....PPADIV-distribution.....")
+  PPA_dist <- file(paste(stem,"PPADIV.distr",sep="_"),"w")
+  writeLines("##### Writing PPADIV distribution...")
   writeLines(paste(simsDiv,collapse=","), PPA_dist)
   close(PPA_dist)
 }
@@ -187,19 +191,22 @@ simsX2 = as.numeric(unlist(simsX2))
 ZChi = abs(empiricalX2-median(simsX2))/sd(simsX2)
 
 
-PPAs <- file("ppaScores.txt","a")
-writeLines(".........PPAX2...........",PPAs)
+PPAs <- file(paste(stem,"ppa.scores",sep="_"),"a")
+writeLines("##### PPAX2",PPAs)
 writeLines(paste("The emprical value is: ", empiricalX2, sep=""), PPAs)
 writeLines(paste("The Z score is: ", ZChi, sep=""), PPAs)
 writeLines(paste("The range of the sims is: ", round(min(simsX2),2), " to ", round(max(simsX2),2), sep=""), PPAs)
+writeLines("\n\n", PPAs)
 close(PPAs)
 
+suppressWarnings({
 if (opt$distribution==TRUE){
-  PPAX2_dist <- file("PPAX2-distributions.txt","w")
-  writeLines(".....PPAX2-distribution.....")
+  PPAX2_dist <- file(paste(stem,"PPAX2.distr",sep="_"),"w")
+  writeLines("##### Writing PPAX2 distribution...")
   writeLines(paste(simsX2,collapse=","), PPAX2_dist)
   close(PPAX2_dist)
 }
+})
 } # close off PPAX2
 
 ###--------------------------------
@@ -241,18 +248,19 @@ simsMulti = as.numeric(unlist(lapply(sims_multi_DF,ppaMultinomial)))
 ZMulti = abs(empiricalMulti-median(simsMulti))/sd(simsMulti)
 
 
-PPAs <- file("ppaScores.txt","a")
-writeLines(".........PPAMULTI...........", PPAs)
+PPAs <- file(paste(stem,"ppa.scores",sep="_"),"a")
+writeLines("##### PPAMULTI", PPAs)
 writeLines(paste("The emprical value is: ", empiricalMulti, sep=""), PPAs)
 writeLines(paste("The Z score is: ", ZMulti, sep=""), PPAs)
 writeLines(paste("The range of the sims is: ", round(min(simsMulti),2), " to ", round(max(simsMulti),2), sep=""), PPAs)
+writeLines("\n\n", PPAs)
 close(PPAs)
 
 if (opt$distribution==TRUE){
-  PPAMULTI_dist <- file("PPAMUTLI-distributions.txt","w")
-  writeLines(".....PPAMUTLI-distribution.....")
-  writeLines(paste(simsMulti,collapse=","), PPAMUTLI_dist)
-  close(PPAMUTLI_dist)
+  PPAMULTI_dist <- file(paste(stem,"PPAMULTI.distr",sep="_"),"w")
+  writeLines("##### Writing PPAMUTLI distribution...")
+  writeLines(paste(simsMulti,collapse=","), PPAMULTI_dist)
+  close(PPAMULTI_dist)
 }                      
 } # close off PPAMULTI
 
